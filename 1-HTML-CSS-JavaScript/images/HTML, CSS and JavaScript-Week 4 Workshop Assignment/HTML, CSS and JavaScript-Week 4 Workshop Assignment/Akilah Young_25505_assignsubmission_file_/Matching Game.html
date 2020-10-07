@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching Game</title>
+    
+</head>
+
+<style>
+    img {
+    position: absolute;
+}
+
+div {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+}
+
+#rightSide {
+    left: 500px;
+    border-left: 1px solid;
+}
+</style>
+
+<body onload='generateFaces()'>
+    <h1>Matching Game</h1>
+    <p>Click on the extra smiley face on the left.</p>
+    <div id="leftSide"></div>
+    <div id="rightSide"></div>
+
+<script>
+    let numberOfFaces = 5;
+const theRightSideDiv = document.getElementById('rightSide');
+const theLeftSideDiv = document.getElementById('leftSide');
+
+function generateFaces(){
+    for(let i = 0; i < numberOfFaces; i++) {
+        face = document.createElement('img');
+        face.src = "images/smile.png";
+        randomTop = Math.floor(Math.random() * 400) + 1;
+        randomLeft = Math.floor(Math.random()* 400) + 1;
+        face.style.top = randomTop + 'px';
+        face.style.left = randomLeft + 'px';
+        theLeftSideDiv.appendChild(face);
+    }
+    //Clone all images to the right side
+    const leftSideImages = theLeftSideDiv.cloneNode(true);
+    leftSideImages.removeChild(leftSideImages.lastChild);
+    theRightSideDiv.appendChild(leftSideImages);
+    theLeftSideDiv.lastChild.addEventListener('click', nextLevel);
+    document.body.addEventListener('click', gameOver);
+}
+
+function nextLevel() {
+    event.stopPropagation();
+    numberOfFaces += 5;
+    generateFaces();
+
+    while (theLeftSidediv.firstChild) {
+        theLeftSideDiv.removeChild(theLeftSideDiv.firstChild);
+        }
+    while (theRightSideDiv.firstChild) {
+    theRightSideDiv.removeChild(theRightSideDiv.firstChild);
+    }
+    
+}
+
+function gameOver() {
+    alert('Game Over!');
+    theLeftSideDiv.lastChild.removeEventListener('click', nextLevel);
+    document.body.removeEventListener('click', gameOver);
+}
+</script>
+  
+</body>
+</html>
